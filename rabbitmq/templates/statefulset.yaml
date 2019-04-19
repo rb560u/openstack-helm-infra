@@ -94,7 +94,7 @@ spec:
         - name: rabbitmq-password
 {{ tuple $envAll "rabbitmq_init" | include "helm-toolkit.snippets.image" | indent 10 }}
           securityContext:
-            runAsUser: 0
+            runAsUser: 999
 {{ tuple $envAll $envAll.Values.pod.resources.server | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
           command:
             - /tmp/rabbitmq-password-hash.py
@@ -121,7 +121,7 @@ spec:
         - name: rabbitmq-cookie
 {{ tuple $envAll "rabbitmq" | include "helm-toolkit.snippets.image" | indent 10 }}
           securityContext:
-            runAsUser: 0
+            runAsUser: 999
 {{ tuple $envAll $envAll.Values.pod.resources.server | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
           command:
             - /tmp/rabbitmq-cookie.sh
@@ -140,7 +140,7 @@ spec:
         - name: rabbitmq-perms
 {{ tuple $envAll "rabbitmq" | include "helm-toolkit.snippets.image" | indent 10 }}
           securityContext:
-            runAsUser: 0
+            runAsUser: 999
 {{ tuple $envAll $envAll.Values.pod.resources.server | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
           command:
             - chown
@@ -155,6 +155,8 @@ spec:
         - name: rabbitmq
 {{ tuple $envAll "rabbitmq" | include "helm-toolkit.snippets.image" | indent 10 }}
 {{ tuple $envAll $envAll.Values.pod.resources.server | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+          securityContext:
+            runAsUser: 999
           command:
             - /tmp/rabbitmq-start.sh
           ports:
