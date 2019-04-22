@@ -52,6 +52,18 @@ spec:
       terminationGracePeriodSeconds: {{ .Values.pod.lifecycle.termination_grace_period.error_pages.timeout | default "60" }}
       initContainers:
 {{ tuple $envAll "error_pages" list | include "helm-toolkit.snippets.kubernetes_entrypoint_init_container" | indent 8 }}
+        - name: ingress-error-pages-perms
+{{ tuple $envAll "error_pages" | include "helm-toolkit.snippets.image" | indent 10 }}
+          securityContext:
+            runAsUser: 0
+{{ tuple $envAll $envAll.Values.pod.resources.error_pages | include "helm-toolkit.snippets.kubernetes_resources" | indent 10 }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - cp /server /tmp;
+              chown nobody:nobody /tmp/server;
+          volumeMounts:
+            - name: pod-tmp
+              mountPath: /tmp
       containers:
         - name: ingress-error-pages
 {{ tuple $envAll "error_pages" | include "helm-toolkit.snippets.image" | indent 10 }}
@@ -63,6 +75,9 @@ spec:
               scheme: HTTP
             initialDelaySeconds: 30
             timeoutSeconds: 5
+          securityContext:
+            runAsUser: 99
+            allowPrivilegeEscalation: false
           ports:
             - containerPort: 8080
           command:
