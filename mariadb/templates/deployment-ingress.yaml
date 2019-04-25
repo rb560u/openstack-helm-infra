@@ -178,9 +178,10 @@ spec:
               value: {{ $ingressClass | quote }}
             - name: ERROR_PAGE_SERVICE
               value: {{ tuple "oslo_db" "error_pages" . | include "helm-toolkit.endpoints.hostname_short_endpoint_lookup" | quote }}
-          command:
-            - /tmp/mariadb-ingress-controller.sh
-            - start
+          command: ["/bin/sh", "-c"]
+          args:
+            - /tmp/mariadb-ingress-controller.sh start
+              mkdir /ingress-controller/ssl
           lifecycle:
             preStop:
               exec:

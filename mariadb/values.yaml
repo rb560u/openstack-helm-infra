@@ -76,7 +76,8 @@ pod:
         runAsUser: 65534
       container:
         server:
-          runAsUser: 0
+          runAsUser: 33
+          privileged: true
     error_pages:
       pod:
         runAsUser: 1000

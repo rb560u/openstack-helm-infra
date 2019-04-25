@@ -27,7 +27,9 @@ function start () {
       --election-id=${RELEASE_NAME} \
       --ingress-class=${INGRESS_CLASS} \
       --default-backend-service=${POD_NAMESPACE}/${ERROR_PAGE_SERVICE} \
-      --tcp-services-configmap=${POD_NAMESPACE}/mariadb-services-tcp
+      --tcp-services-configmap=${POD_NAMESPACE}/mariadb-services-tcp \
+      --http-port 8888 \
+      --https-port 8181
 }
 
 
