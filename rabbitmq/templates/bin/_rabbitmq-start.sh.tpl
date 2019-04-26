@@ -44,7 +44,7 @@ POD_INCREMENT=$(echo "${MY_POD_NAME}" | awk -F '-' '{print $NF}')
 if ! [ "${POD_INCREMENT}" -eq "0" ] && ! [ -d "/var/lib/rabbitmq/mnesia" ] ; then
   echo 'This is not the 1st rabbit pod & has not been initialised'
   # disable liveness probe as it may take some time for the pod to come online.
-  touch /run/rabbit-disable-liveness-probe
+  touch /tmp/rabbit-disable-liveness-probe
   POD_NAME_PREFIX="$(echo "${MY_POD_NAME}" | awk 'BEGIN{FS=OFS="-"}{NF--; print}')"
   for TARGET_POD in $(seq 0 +1 $((POD_INCREMENT - 1 ))); do
     END=$(($(date +%s) + 900))
@@ -56,7 +56,7 @@ if ! [ "${POD_INCREMENT}" -eq "0" ] && ! [ -d "/var/lib/rabbitmq/mnesia" ] ; the
       fi
     done
   done
-  rm -fv /run/rabbit-disable-liveness-probe
+  rm -fv /tmp/rabbit-disable-liveness-probe
 fi
 
 exec rabbitmq-server

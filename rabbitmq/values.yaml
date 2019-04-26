@@ -67,6 +67,7 @@ pod:
         rabbitmq_perms:
           readOnlyRootFilesystem: false
         rabbitmq:
+          runAsUser: 999
           readOnlyRootFilesystem: false
     cluster_wait:
       pod:
