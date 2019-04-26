@@ -44,10 +44,13 @@ pod:
   security_context:
     error_pages:
       pod:
-        runAsUser: 0
+        runAsUser: 99
       container:
+        ingress_error_pages_perms:
+          runAsUser: 0
         ingress_error_pages:
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
     server:
       pod:
         runAsUser: 0
