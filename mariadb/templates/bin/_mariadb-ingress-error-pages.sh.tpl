@@ -20,7 +20,7 @@ set -ex
 COMMAND="${@:-start}"
 
 if [ "x${COMMAND}" == "xstart" ]; then
-  exec /server
+  exec /tmp/server
 elif [ "x${COMMAND}" == "xstop" ]; then
   kill -TERM 1
 fi

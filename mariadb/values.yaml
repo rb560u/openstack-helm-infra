@@ -82,8 +82,11 @@ pod:
         runAsUser: 1000
       container:
         server:
-          runAsUser: 0
+          runAsUser: 99
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+        ingress-error-pages-perms-init:
+          runAsUser: 0
     prometheus_mysql_exporter:
       pod:
         runAsUser: 99
