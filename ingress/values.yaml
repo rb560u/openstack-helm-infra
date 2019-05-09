@@ -66,8 +66,10 @@ pod:
               - NET_ADMIN
           readOnlyRootFilesystem: false
         ingress:
+          runAsUser: 33
           readOnlyRootFilesystem: false
         ingress_vip:
+          runAsUser: 33
           capabilities:
             add:
               - NET_ADMIN
